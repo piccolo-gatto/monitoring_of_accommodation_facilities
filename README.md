@@ -1,3 +1,4 @@
-``docker network create --driver bridge geodata \n``
-``docker-compose build \n``
-``docker-compose up``
+```bash
+docker network create --driver bridge geodata
+docker-compose build
+docker-compose up```
