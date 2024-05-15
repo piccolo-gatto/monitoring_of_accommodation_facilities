@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "parser"
+version = "0.1.0"
+description = ""
+authors = ["Ekaterina <108530800+piccolo-gatto@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+selenium = "^4.20.0"
+requests = "^2.31.0"
+tqdm = "^4.66.4"
+pandas = "^2.2.2"
+flask = "^3.0.3"
+flask-apscheduler = "^1.13.1"
+uvicorn = "^0.29.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,44 @@
+volumes:
+  pg_timeweb:
+services:
+  server:
+    container_name: server
+    image: server
+    build:
+      context: server/
+      dockerfile: Dockerfile
+    ports:
+      - "8005:8005"
+    networks:
+      - geodata
+
+  view:
+    container_name: view
+    image: view
+    build:
+      context: view/
+      dockerfile: Dockerfile
+    ports:
+      - "8050:8050"
+    networks:
+      - geodata
+
+  parser:
+    container_name: parser
+    image: parser
+    build:
+      context: parser/
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    networks:
+      - geodata
+
+networks:
+  geodata:
+    external: true
+
+
+
+
+
