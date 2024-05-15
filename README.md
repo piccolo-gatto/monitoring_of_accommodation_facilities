@@ -1,4 +1,5 @@
 ```bash
 docker network create --driver bridge geodata
 docker-compose build
-docker-compose up```
+docker-compose up
+```
