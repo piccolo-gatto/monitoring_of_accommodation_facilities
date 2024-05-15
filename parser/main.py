@@ -12,7 +12,7 @@ urls = ['https://www.avito.ru/irkutskaya_oblast/komnaty/sdam/posutochno/-ASgBAgI
         'https://www.avito.ru/irkutskaya_oblast/doma_dachi_kottedzhi/sdam/posutochno-ASgBAgICAkSUA9IQoAjKVQ?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYyt1JKTixJzMlPV7KuBQQAAP__dhSE3CMAAAA&f=ASgBAgICA0SUA9IQoAjKVeb5EcSHiwM&user=1',
         'https://www.avito.ru/irkutskaya_oblast/kvartiry/sdam/posutochno/-ASgBAgICAkSSA8gQ8AeSUg?cd=1&context=H4sIAAAAAAAA_0q0MrSqLraysFJKK8rPDUhMT1WyLrYyt1JKTixJzMlPV7KuBQQAAP__dhSE3CMAAAA&user=1']
 
-@scheduler.task('cron', id='parse', hour=0, minute=5)
+@scheduler.task('cron', id='parse', hour=0, minute=0)
 def parse():
     for url in urls:
         avito.avito_data(url)

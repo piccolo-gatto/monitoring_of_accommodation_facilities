@@ -30,7 +30,7 @@ app.layout = html.Div([
     html.Div([
         html.Div([
             dcc.Dropdown(df['type'].unique(), id='types_filter', value=df['type'].unique(), multi=True, style={'width': '100%'}),
-            dcc.Dropdown(df2['name'].unique(), id='services_filter', value=df2['name'].unique(), multi=True, style={'width': '100%'}),
+            dcc.Dropdown(df2['name'].unique(), id='services_filter', multi=True, style={'width': '100%'}),
 
         ], style={'display': 'flex', 'flexDirection': 'row'}),
      dcc.RangeSlider(df3['price'].min(), df3['price'].max(), step=1, marks=None,
@@ -69,8 +69,9 @@ def update_map(types, services, prices):
                                         json={'types': types, 'services': services,
                                               'min_price': prices[0],
                                               'max_price': prices[1]}).json())
+        print(filter)
         fig = px.scatter_mapbox(zoom=5, lat=filter['lat'], lon=filter['lon'],
-            color=filter['type'], title='Карта средств размещения' )
+            color=filter['type'], title='Карта средств размещения', hover_name=filter['address'], hover_data={'цена': filter['price']})
         fig.update_layout(
                         mapbox_style='carto-positron',
                         mapbox_center={'lat': filter['lat'].mean(),
@@ -90,12 +91,12 @@ def update_types(pie_param, types, services, prices):
                                                       'max_price': prices[1]}).json())
 
 
-            fig = px.pie(filter, values='id', names='type', title=f'{pie_param}: процентное соотношение')
+            fig = px.pie(filter, values='id', names='type', title=f'{pie_param}:\nпроцентное соотношение')
         else:
             filter = pd.DataFrame(requests.post("http://server:8000/filter_services",
                                                 json={'types': types, 'services': services, 'min_price': prices[0],
                                                       'max_price': prices[1]}).json())
-            fig = px.pie(filter, values='id', names='service_type', title=f'{pie_param}: процентное соотношение')
+            fig = px.pie(filter, values='id', names='service_type', title=f'{pie_param}:\nпроцентное соотношение')
         return fig
 
 
@@ -105,10 +106,7 @@ def update_types(pie_param, types, services, prices):
         Input('services_filter', 'value'),
         Input('prices_filter', 'value'))
 def update_serv(types, services, prices):
-        filter = pd.DataFrame(requests.post("http://server:8000/filter_services",
-                                            json={'types': types, 'services': services, 'min_price': prices[0],
-                                                  'max_price': prices[1]}).json())
-        fig = px.histogram(x=filter['name'], y=filter['id'], histfunc='count', title='Популярность предоставляемых услуг', labels={'x': 'Услуга', 'y': 'Количество'} )
+        fig = px.histogram(x=df2['name'], y=df2['id'], histfunc='count', title='Популярность предоставляемых услуг', labels={'x': 'Услуга', 'y': 'Количество'} )
         return fig
 
 @callback(

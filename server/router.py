@@ -30,7 +30,7 @@ async def filter_houses(request: Filter, db: Session = Depends(get_db)):
     try:    
         res = []
         for house, price in zip(houses, prices):
-            services = db.query(Services).where(Services.house_id == house.id == price.house_id).all()
+            services = db.query(Services).where(Services.house_id == house.id).all()
             print(request.services)
             check = 0
             for service in services:
@@ -100,14 +100,14 @@ async def filter_services(request: Filter, db: Session = Depends(get_db)):
     try:   
         res = []
         for house, price in zip(houses, prices):
-            services = db.query(Services).where(Services.house_id == house.id == price.house_id).all()
+            services = db.query(Services).where(Services.house_id == house.id).all()
             print(request.services)
             check = 0
             for service in services:
                 if service.name in request.services:
                     check += 1
             if len(request.services) == check:
-                for service in services:    
+                for service in services:
                     res.append({
                             'id': service.id,
                             'house_id': house.id,
@@ -149,7 +149,7 @@ async def filter_mean_prices(request: Filter, db: Session = Depends(get_db)):
     try:
         res = []
         for house, price in zip(houses, prices):
-            services = db.query(Services).where(house.id == Services.house_id == price.house_id).all()
+            services = db.query(Services).where(house.id == Services.house_id).all()
             print(request.services)
             check = 0
             for service in services:
